@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
@@ -27,6 +28,7 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
+	@Size(min=1, max=255, message="Email required")
 	@Email
 	private String email;
 	
@@ -60,6 +62,10 @@ public class User {
 			joinColumns = @JoinColumn(name = "user_id"), 
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
+	
+	//Teachers to courses taught
+	@OneToMany(mappedBy="teacher", fetch = FetchType.LAZY)
+	private List<Course> courses;
 	
 	public User() {
 		this.createdAt = new Date();
@@ -154,6 +160,14 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 	
 }

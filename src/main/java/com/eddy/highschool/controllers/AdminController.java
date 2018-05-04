@@ -1,6 +1,7 @@
 package com.eddy.highschool.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.eddy.highschool.models.Course;
+import com.eddy.highschool.models.User;
 import com.eddy.highschool.services.CourseServices;
 import com.eddy.highschool.services.UserServices;
 
@@ -37,6 +39,11 @@ public class AdminController {
 								Model model) {
 		ArrayList<Course> allCourses = cS.allCourses();
 		model.addAttribute("allCourses", allCourses);
+		
+		//List<Object[]> allTeachers = uS.findAllTeachers();
+		List<User> allTeachers = uS.findAllTeachers();
+		model.addAttribute("allTeachers", allTeachers);
+		
 		return "adminCourses";
 	}
 	
@@ -50,5 +57,15 @@ public class AdminController {
 		cS.saveCourse(course);
 		return "redirect:/admin/courses";
 	}
-	
+	/*
+	@RequestMapping("/assignTeacher")
+	public String showTeachers(@ModelAttribute("teacher")User teacher,
+												Model model) {
+		ArrayList<User> 
+	}
+	*/
 }
+
+
+
+

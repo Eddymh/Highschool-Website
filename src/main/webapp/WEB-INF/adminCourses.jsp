@@ -27,32 +27,52 @@
 				<td>${course.name }</td>
 				<td>${course.capacity }</td>
 				<td>${course.description }</td>
-				<td><p>TBA</p></td>
+				<td>${course.teacher.firstName } ${course.teacher.lastName }</td>
 				<td><p>TBA</p></td>
 				<td><p>TBA</p></td>
 			</tr>
 		</c:forEach>
 	</table>
 	
+	<strong>Create new course</strong>
+	
 	<form:form action="/admin/courses" method="POST" modelAttribute="course">
+	
 		<form:label path="prefix" >Prefix:
 			<form:errors path="prefix" />
 			<form:input path="Prefix" />
 		</form:label><br>
+		
 		<form:label path="name" >Name:
 			<form:errors path="name" />
 			<form:input path="name" />
 		</form:label><br>
+		
 		<form:label path="capacity" >Capacity:
 			<form:errors path="capacity" />
 			<form:input path="capacity" type="number"/>
 		</form:label><br>
+		
 		<form:label path="description" >Description:
 			<form:errors path="description" />
 			<form:input path="description" />
 		</form:label><br>
+		
+		<form:label path="teacher" >Teacher:
+			<form:select path="teacher" >
+				<c:forEach var="teacher" items="${allTeachers}" >
+					<form:option value="${teacher }">${teacher.firstName} ${teacher.lastName}</form:option>
+				</c:forEach>
+			</form:select>
+		</form:label><br>
+		
 		<input type="submit" value="create" >
 	</form:form>
+	
+	<form id="logoutForm" method="POST" action="/logout" >
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		<input type="submit" value="Logout" />
+	</form>
 	
 </body>
 </html>

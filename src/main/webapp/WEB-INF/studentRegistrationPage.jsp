@@ -10,6 +10,7 @@
 </head>
 <body>
 	<h1>Registration</h1>
+	<strong>${error }</strong>
 	<form:form method="post" action="/student/registration" modelAttribute="user">
 	
 		<form:label path="firstName">First Name:

@@ -1,5 +1,8 @@
 package com.eddy.highschool.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +61,10 @@ public class UserServices {
 		uR.save(user);
 	}
 	
+	public List<User> findAll(){
+		return (List<User>) this.uR.findAll();
+	}
+	
 	public User findByEmail(String email) {
 		return uR.findByEmail(email);
 	}
@@ -66,5 +73,20 @@ public class UserServices {
 		return uR.findByUsername(username);
 	}
 	
+	public User findById(Long id) {
+		return uR.findById(id).orElse(null);
+	}
+	
+	public List<String> findAllTeachersUsername(){
+		return uR.findAllUsersTeachers();
+	}
+	
+	public List<User> findAllTeachers(){
+		List<User> allTeachers= new ArrayList<>();
+		for(String username: findAllTeachersUsername()) {
+			allTeachers.add( findByUsername(username) );
+		}
+		return allTeachers;
+	}
 	
 }

@@ -24,7 +24,12 @@ public class UserController {
 		String username = principal.getName();
 		model.addAttribute("currentUser", uS.findByUsername(username));
 		User user = uS.findByUsername(username);
-		System.out.println(user.getRoles().get(0).getName());
+		
+		//should go by default to /login if noone on session
+		if(user == null) {
+			return "redirect:/login";
+		}
+		
 		if(user.getRoles().get(0).getName().equals("ROLE_ADMIN")) {
 			return "redirect:/admin";
 		}

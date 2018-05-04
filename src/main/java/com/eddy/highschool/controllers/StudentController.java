@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.eddy.highschool.models.User;
 import com.eddy.highschool.services.UserServices;
@@ -34,8 +35,7 @@ public class StudentController {
 	@PostMapping("/registration")
 	public String registration(@Valid @ModelAttribute("user")User user, 
 								BindingResult result, 
-								Model model, 
-								HttpSession session) {
+								RedirectAttributes flash) {
 		
 		uV.validate(user,result);
 		

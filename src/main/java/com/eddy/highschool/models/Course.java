@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -42,6 +44,11 @@ public class Course {
 	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
 	private Date updatedAt;
 
+	//A course can have only one teacher
+	@ManyToOne (fetch = FetchType.LAZY)
+	@JoinColumn(name="teacher_id")
+	private User teacher;
+	
 	public Course() {
 		this.createdAt = new Date();
 		this.updatedAt = new Date();
@@ -102,6 +109,13 @@ public class Course {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
+
+	public User getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(User teacher) {
+		this.teacher = teacher;
+	}
 	
 }
