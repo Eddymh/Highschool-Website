@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
@@ -48,6 +50,14 @@ public class Course {
 	@ManyToOne (fetch = FetchType.LAZY)
 	@JoinColumn(name="teacher_id")
 	private User teacher;
+	
+	//A course can have many students
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "students_coursesTaken",
+			joinColumns = @JoinColumn(name="course_id"),
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> students;
 	
 	public Course() {
 		this.createdAt = new Date();
@@ -116,6 +126,14 @@ public class Course {
 
 	public void setTeacher(User teacher) {
 		this.teacher = teacher;
+	}
+
+	public List<User> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<User> students) {
+		this.students = students;
 	}
 	
 }

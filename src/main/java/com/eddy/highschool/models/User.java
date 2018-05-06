@@ -63,9 +63,17 @@ public class User {
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
 	
-	//Teachers to courses taught
+	//Teachers can teach many courses
 	@OneToMany(mappedBy="teacher", fetch = FetchType.LAZY)
 	private List<Course> courses;
+	
+	//A student can take many courses
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name="students_coursesTaken",
+			joinColumns = @JoinColumn(name="user_id"),
+			inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private List<Course> coursesTaken;
 	
 	public User() {
 		this.createdAt = new Date();
@@ -168,6 +176,14 @@ public class User {
 
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
+	}
+
+	public List<Course> getCoursesTaken() {
+		return coursesTaken;
+	}
+
+	public void setCoursesTaken(List<Course> coursesTaken) {
+		this.coursesTaken = coursesTaken;
 	}
 	
 }

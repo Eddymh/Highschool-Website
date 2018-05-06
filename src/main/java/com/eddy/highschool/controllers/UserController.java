@@ -34,10 +34,10 @@ public class UserController {
 			return "redirect:/admin";
 		}
 		if(user.getRoles().get(0).getName().equals("ROLE_TEACHER")) {
-			return "teacherPage";
+			return "redirect:/teacher/homepage";
 		}
 		if(user.getRoles().get(0).getName().equals("ROLE_STUDENT")) {
-			return "studentPage";
+			return "redirect:/student/homepage";
 		}
 		return "noRoleErrorPage";
 	}

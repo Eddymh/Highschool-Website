@@ -9,6 +9,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<form id="logoutForm" method="POST" action="/logout" >
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		<input type="submit" value="Logout" />
+	</form>
+	
 	<h1>Courses</h1>
 	
 	<table>
@@ -18,8 +23,9 @@
 			<th>Capacity</th>
 			<th>Description</th>
 			<th>Teacher</th>
-			<th>Student Count</th>
-			<th>Modify</th>
+			<th>Student count</th>
+			<th>update</th>
+			<th>Delete</th>
 		</tr>
 		<c:forEach var="course" items="${allCourses}">
 			<tr>
@@ -29,7 +35,13 @@
 				<td>${course.description }</td>
 				<td>${course.teacher.firstName } ${course.teacher.lastName }</td>
 				<td><p>TBA</p></td>
-				<td><p>TBA</p></td>
+				<td><a href="/admin/courses/${course.id }">Update</a></td>
+				<td>
+					<form action="/admin/courses/delete/${course.id }" method="post">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<input type="submit" value="Delete">
+					</form>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -69,10 +81,7 @@
 		<input type="submit" value="create" >
 	</form:form>
 	
-	<form id="logoutForm" method="POST" action="/logout" >
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		<input type="submit" value="Logout" />
-	</form>
+	
 	
 </body>
 </html>

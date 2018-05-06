@@ -22,4 +22,16 @@ public class CourseServices {
 	public void saveCourse(Course course) {
 		this.cR.save(course);
 	}
+	
+	public Course findById(Long id) {
+		return this.cR.findById(id).orElse(null);
+	}
+	
+	public void update(Course course) {
+		this.cR.save(course);
+	}
+	
+	public void delete(Course course) {
+		this.cR.delete(course);
+	}
 }

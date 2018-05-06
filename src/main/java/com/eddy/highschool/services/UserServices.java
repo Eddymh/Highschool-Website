@@ -89,4 +89,8 @@ public class UserServices {
 		return allTeachers;
 	}
 	
+	public void update(User user) {
+		this.uR.save(user);
+	}
+	
 }

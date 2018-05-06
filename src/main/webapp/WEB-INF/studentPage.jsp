@@ -15,5 +15,28 @@
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="submit" value="Logout" />
 	</form>
+	
+	<h3>Enrolled courses</h3>
+	<table>
+		<tr>
+			<th>Prefix</th>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Capacity</th>
+			<th>Teacher</th>
+		</tr>
+		<c:forEach items="${courses }" var="course">
+			<tr>
+				<td>${course.prefix }</td>
+				<td>${course.name }</td>
+				<td>${course.description }</td>
+				<td>${course.capacity }</td>
+				<td>${course.teacher.firstName } ${course.teacher.lastName }</td>
+			</tr>
+		</c:forEach>
+	</table>
+	
+	<a href="/student/courses" >See courses available</a>
+	
 </body>
 </html>
