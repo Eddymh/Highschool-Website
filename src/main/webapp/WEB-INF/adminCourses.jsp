@@ -14,6 +14,8 @@
 		<input type="submit" value="Logout" />
 	</form>
 	
+	<a href="/admin"> HomePage </a>
+	
 	<h1>Courses</h1>
 	
 	<table>

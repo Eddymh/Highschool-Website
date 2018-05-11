@@ -42,50 +42,9 @@ public class StudentController {
 		User user = uS.findByUsername(username);
 		model.addAttribute("currentUser",user);
 		
-		List<Course> courses = user.getCourses();
+		List<Course> courses = user.getCoursesTaken();
 		model.addAttribute("courses",courses);
-		System.out.println(courses.size());
-		return "studentPage";
+		return "student/studentHomePage";
 	}
 	
-	@RequestMapping("/courses")
-	public String coursesAvailable(Model model) {
-		List<Course> courses = cS.allCourses();
-		model.addAttribute("courses",courses);
-		return "studentCourses";
-	}
-
-	@PostMapping("/courses/{id}")
-	public String addCourse(@PathVariable ("id")Long id, 
-							Principal principal) {
-		String username = principal.getName();
-		User student = uS.findByUsername(username);
-		
-		Course course = cS.findById(id);
-		List<User> students = course.getStudents();
-		students.add(student);
-		System.out.println(students.size());
-		course.setStudents(students);
-		cS.update(course);
-		return "redirect:/student/homepage";
-	}
-	
-	@RequestMapping("/registration")
-	public String registerForm(@Valid @ModelAttribute("user")User user) {
-		return "studentRegistrationPage";
-	}
-	
-	@PostMapping("/registration")
-	public String registration(@Valid @ModelAttribute("user")User user, 
-								BindingResult result, 
-								RedirectAttributes flash) {
-		
-		uV.validate(user,result);
-		
-		if(result.hasErrors()) {
-			return "studentRegistrationPage";
-		}
-		uS.saveWithStudentRole(user);
-		return "redirect:/login";
-	}
 }

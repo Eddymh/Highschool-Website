@@ -32,14 +32,13 @@ public class UserController {
 		
 		if(user.getRoles().get(0).getName().equals("ROLE_ADMIN")) {
 			return "redirect:/admin";
-		}
-		if(user.getRoles().get(0).getName().equals("ROLE_TEACHER")) {
+		}else if(user.getRoles().get(0).getName().equals("ROLE_TEACHER")) {
 			return "redirect:/teacher/homepage";
-		}
-		if(user.getRoles().get(0).getName().equals("ROLE_STUDENT")) {
+		}else if(user.getRoles().get(0).getName().equals("ROLE_STUDENT")) {
 			return "redirect:/student/homepage";
+		}else {
+			return "noRoleErrorPage";
 		}
-		return "noRoleErrorPage";
 	}
 	
 	@RequestMapping("/login")
@@ -54,12 +53,4 @@ public class UserController {
 		}
 		return "loginPage";
 	}
-	
-	@RequestMapping("/admin")
-	public String adminPage(Principal principal, Model model) {
-		String username = principal.getName();
-		model.addAttribute("currentUser", uS.findByUsername(username));
-		return "adminPage";
-	}
-	
 }

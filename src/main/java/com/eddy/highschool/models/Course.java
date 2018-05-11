@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -38,6 +36,8 @@ public class Course {
 	@NotNull
 	private Long capacity;
 	
+	private Long grade;
+	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
 	private Date createdAt;
@@ -58,7 +58,15 @@ public class Course {
 			joinColumns = @JoinColumn(name="course_id"),
 			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> students;
-	
+	/*
+	//course and grades
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "courses_grades",
+			joinColumns = @JoinColumn(name="course_id"),
+			inverseJoinColumns = @JoinColumn(name = "grade_id"))
+	private List<Grade> grades;
+	*/
 	public Course() {
 		this.createdAt = new Date();
 		this.updatedAt = new Date();
@@ -134,6 +142,14 @@ public class Course {
 
 	public void setStudents(List<User> students) {
 		this.students = students;
+	}
+
+	public Long getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Long grade) {
+		this.grade = grade;
 	}
 	
 }

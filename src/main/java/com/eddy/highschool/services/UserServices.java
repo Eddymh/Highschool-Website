@@ -41,6 +41,15 @@ public class UserServices {
 			rR.save(user);
 			
 		}
+		
+		if (uR.findAll().size() <1) {
+			User user = new User();
+			user.setUsername("admin@admin");
+			String rawPassword = "1234qwer";
+			user.setPassword(bCrypt.encode(rawPassword));
+			user.setRoles(rR.findByName("ROLE_ADMIN"));
+			uR.save(user);
+		}
 	}
 	
 	public void saveWithStudentRole(User user) {
@@ -77,16 +86,24 @@ public class UserServices {
 		return uR.findById(id).orElse(null);
 	}
 	
-	public List<String> findAllTeachersUsername(){
-		return uR.findAllUsersTeachers();
-	}
-	
 	public List<User> findAllTeachers(){
 		List<User> allTeachers= new ArrayList<>();
-		for(String username: findAllTeachersUsername()) {
+		for(String username: uR.findAllUsersTeachers()) {
 			allTeachers.add( findByUsername(username) );
 		}
 		return allTeachers;
+	}
+	
+	private List<String> findAllStudentsUsername(){
+		return uR.findAllUsersStudents();
+	}
+	
+	public List<User> findAllStudents(){
+		List<User> allStudents = new ArrayList<>();
+		for(String username: uR.findAllUsersStudents()) {
+			allStudents.add(findByUsername(username));
+		}
+		return allStudents;
 	}
 	
 	public void update(User user) {

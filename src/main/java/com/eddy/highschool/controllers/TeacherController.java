@@ -3,31 +3,28 @@ package com.eddy.highschool.controllers;
 import java.security.Principal;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.eddy.highschool.models.Course;
 import com.eddy.highschool.models.User;
+import com.eddy.highschool.services.CourseServices;
 import com.eddy.highschool.services.UserServices;
-import com.eddy.highschool.validator.UserValidator;
 
 @Controller
 @RequestMapping("/teacher")
 public class TeacherController {
 
 	private UserServices uS;
-	private UserValidator uV;
+	private CourseServices cS;
 	
-	public TeacherController(UserServices uS, UserValidator uV) {
+	public TeacherController(UserServices uS, CourseServices cS) {
 		this.uS = uS;
-		this.uV = uV;
+		this.cS = cS;
 	}
 	
 	@RequestMapping("/homepage")
@@ -38,27 +35,28 @@ public class TeacherController {
 		List<Course> courses = user.getCourses();
 		model.addAttribute("currentUser",user);
 		model.addAttribute("courses",courses);
-		return "teacherPage";
+		return "teacher/teacherHomePage";
 	}
 	
-	@RequestMapping("/registration")
-	public String registerForm(@Valid @ModelAttribute("user")User user) {
-		return "teacherRegistrationPage";
+	@RequestMapping("/homepage/{id}")
+	public String studentsEnrolled(@PathVariable ("id") Long id, 
+									Model model) {
+		Course course = cS.findById(id);
+		List<User> students = course.getStudents();
+		model.addAttribute("students", students);
+		model.addAttribute("course", course);
+		return "teacher/studentsEnrolled";
 	}
-	
-	@PostMapping("/registration")
-	public String registration(@Valid @ModelAttribute("user")User user, 
-								BindingResult result, 
-								RedirectAttributes flash) {
+	/*
+	@PostMapping("/assignGrade")
+	public String assignGrade(@RequestParam("studentId")Long studentId,
+							@RequestParam("courseId")Long courseId,
+							@RequestParam("finalGrade")Long grade) {
+		User student = uS.findById(studentId);
 		
-		uV.validate(user,result);
 		
-		if(result.hasErrors()) {
-			return "teacherRegistrationPage";
-		}
-		//uS.saveWithAdminRole(user);
-		uS.saveWithTeacherRole(user);
-		return "redirect:/login";
+		
+		return "redirect:/teacher/homepage/" + courseId;
 	}
-	
+	*/
 }

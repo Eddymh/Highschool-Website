@@ -13,12 +13,16 @@
 	<h1>ADMIN PANEL</h1>
 	<h1>Welcome <c:out value="${currentUser.firstName} ${currentUser.lastName}"></c:out></h1>
 	
+	<strong>${success }</strong>
+	
 	<form id="logoutForm" method="POST" action="/logout" >
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="submit" value="Logout" />
 	</form>
 	<p></p>
-	<a href="/admin/courses">Courses</a>
-	
+	<a href="/admin/courses">Courses</a><br>
+	<a href="/admin/user-registration">Register a user</a><br>
+	<a href="/admin/students">Students</a><br>
+	<a href="/admin/teachers">Teachers</a>
 </body>
 </html>

@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
             <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,7 +10,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<a href="/admin"> HomePage </a>
 	<h1>Courses available</h1>
+	<strong>${error }</strong>
 	<table>
 		<tr>
 			<th>Prefix</th>
@@ -19,15 +22,17 @@
 			<th>Teacher</th>
 			<th>Availability</th>
 		</tr>
-			<c:forEach items="${courses }" var="course">
+			<c:forEach items="${allCourses }" var="course">
 				<tr>
 					<td>${course.prefix }</td>
 					<td>${course.name }</td>
 					<td>${course.description }</td>
-					<td>${course.capacity }</td>
+					<td>${fn:length(course.students) }/${course.capacity }</td>
 					<td>${course.teacher.firstName } ${course.teacher.lastName }</td>
 					<td>
-						<form action="/student/courses/${course.id }" method="POST">
+						<form action="/admin/students" method="POST">
+							<input type=hidden name="studentId" value="${studentId }" />
+							<input type=hidden name="courseId" value="${course.id }" />
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<input type="submit" value="Add">
 						</form>

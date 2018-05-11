@@ -9,34 +9,33 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Welcome Teacher <c:out value="${currentUser.firstName} ${currentUser.lastName}"></c:out></h1>
+	<h1>Welcome Student <c:out value="${currentUser.firstName} ${currentUser.lastName}"></c:out></h1>
 	
 	<form id="logoutForm" method="POST" action="/logout" >
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="submit" value="Logout" />
 	</form>
 	
-	<h3>Courses assigned</h3>
-	
+	<h3>Enrolled courses</h3>
 	<table>
 		<tr>
 			<th>Prefix</th>
 			<th>Name</th>
 			<th>Description</th>
 			<th>Capacity</th>
-			<th>Students enrolled</th>
-			<th>Students list</th>
+			<th>Teacher</th>
+			<th>Teacher's email</th>
 		</tr>
-			<c:forEach items="${courses }" var="course">
-				<tr>
-					<td>${course.prefix }</td>
-					<td>${course.name }</td>
-					<td>${course.description }</td>
-					<td>${course.capacity }</td>
-					<td><p>number of students enrolled</p></td>
-					<td><a href="/teacher/course/(needs to implement this)">See Students</a></td>
-				</tr>
-			</c:forEach>
+		<c:forEach items="${courses }" var="course">
+			<tr>
+				<td>${course.prefix }</td>
+				<td>${course.name }</td>
+				<td>${course.description }</td>
+				<td>${course.capacity }</td>
+				<td>${course.teacher.firstName } ${course.teacher.lastName }</td>
+				<td>${course.teacher.email }</td>
+			</tr>
+		</c:forEach>
 	</table>
 	
 </body>

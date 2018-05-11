@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -40,6 +39,18 @@ public class User {
 	
 	@Size(min=1, max=255)
 	private String lastName;
+	
+	@Size(min=1, max=255)
+	private String street;
+	
+	@Size(min=1, max=255)
+	private String city;
+	
+	@Size(min=1, max=255)
+	private String zipCode;
+	
+	@Size(min=10, max=11)
+	private String phoneNumber;
 	
 	@Size(min=8, max=255)
 	private String password;
@@ -165,7 +176,7 @@ public class User {
 	public String getUsername() {
 		return username;
 	}
-
+	
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -184,6 +195,38 @@ public class User {
 
 	public void setCoursesTaken(List<Course> coursesTaken) {
 		this.coursesTaken = coursesTaken;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	
 }

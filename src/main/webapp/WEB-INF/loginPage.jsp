@@ -27,8 +27,6 @@
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<input type="submit" value="Login" />
 	</form>
-	
-	<h1>New students register <a href="/student/registration">here</a></h1>
-	<h1>New teachers register <a href="/teacher/registration">here</a></h1>
+
 </body>
 </html>
