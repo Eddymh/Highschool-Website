@@ -1,6 +1,7 @@
 package com.eddy.highschool.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.eddy.highschool.models.Course;
+import com.eddy.highschool.models.CourseStudent;
 import com.eddy.highschool.models.User;
 import com.eddy.highschool.services.CourseServices;
+import com.eddy.highschool.services.CourseStudentService;
 import com.eddy.highschool.services.UserServices;
 
 @Controller
@@ -21,10 +24,12 @@ public class TeacherController {
 
 	private UserServices uS;
 	private CourseServices cS;
+	private CourseStudentService cSS;
 	
-	public TeacherController(UserServices uS, CourseServices cS) {
+	public TeacherController(UserServices uS, CourseServices cS, CourseStudentService cSS) {
 		this.uS = uS;
 		this.cS = cS;
+		this.cSS = cSS;
 	}
 	
 	@RequestMapping("/homepage")
@@ -42,21 +47,25 @@ public class TeacherController {
 	public String studentsEnrolled(@PathVariable ("id") Long id, 
 									Model model) {
 		Course course = cS.findById(id);
-		List<User> students = course.getStudents();
+		List<User> students = cSS.findStudents(id);
 		model.addAttribute("students", students);
 		model.addAttribute("course", course);
 		return "teacher/studentsEnrolled";
 	}
-	/*
+	
 	@PostMapping("/assignGrade")
 	public String assignGrade(@RequestParam("studentId")Long studentId,
 							@RequestParam("courseId")Long courseId,
-							@RequestParam("finalGrade")Long grade) {
-		User student = uS.findById(studentId);
-		
-		
-		
+							@RequestParam("finalGrade")Long finalGrade) {
+		ArrayList<CourseStudent> courseStudents = (ArrayList<CourseStudent>) this.cSS.findAll();
+		for(CourseStudent var: courseStudents) {
+			if(var.getCourse().getId() == courseId && var.getUser().getId() == studentId) {
+				var.setFinalGrade(finalGrade);
+				cSS.save(var);
+				break;
+			}
+		}
 		return "redirect:/teacher/homepage/" + courseId;
 	}
-	*/
+	
 }

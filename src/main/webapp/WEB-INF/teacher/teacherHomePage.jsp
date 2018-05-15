@@ -33,7 +33,7 @@
 					<td>${course.prefix }</td>
 					<td>${course.name }</td>
 					<td>${course.description }</td>
-					<td>${fn:length(course.students)}/${course.capacity}</td>
+					<td>${fn:length(course.coursesStudents)}/${course.capacity}</td>
 					<td><a href="/teacher/homepage/${course.id }">See Students</a></td>
 				</tr>
 			</c:forEach>

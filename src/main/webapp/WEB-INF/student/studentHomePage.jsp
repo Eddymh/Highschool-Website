@@ -25,6 +25,7 @@
 			<th>Capacity</th>
 			<th>Teacher</th>
 			<th>Teacher's email</th>
+			<th>Final Grade</th>
 		</tr>
 		<c:forEach items="${courses }" var="course">
 			<tr>
@@ -34,6 +35,17 @@
 				<td>${course.capacity }</td>
 				<td>${course.teacher.firstName } ${course.teacher.lastName }</td>
 				<td>${course.teacher.email }</td>
+				<td>
+					<c:choose>
+						<c:when test="${empty course.coursesStudents.get(0).finalGrade }">
+							no grade assigned
+						</c:when>
+						<c:otherwise>
+							${course.coursesStudents.get(0).finalGrade}
+						</c:otherwise>
+					</c:choose>
+				</td>
+				
 			</tr>
 		</c:forEach>
 	</table>

@@ -94,10 +94,6 @@ public class UserServices {
 		return allTeachers;
 	}
 	
-	private List<String> findAllStudentsUsername(){
-		return uR.findAllUsersStudents();
-	}
-	
 	public List<User> findAllStudents(){
 		List<User> allStudents = new ArrayList<>();
 		for(String username: uR.findAllUsersStudents()) {

@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.eddy.highschool.models.Course;
+import com.eddy.highschool.models.CourseStudent;
 import com.eddy.highschool.models.User;
 import com.eddy.highschool.services.CourseServices;
+import com.eddy.highschool.services.CourseStudentService;
 import com.eddy.highschool.services.UserServices;
 import com.eddy.highschool.validator.UserValidator;
 
@@ -29,11 +31,13 @@ public class AdminController {
 	private UserValidator uV;
 	private UserServices uS;
 	private CourseServices cS;
+	private CourseStudentService cSS;
 	
-	public AdminController(UserServices uS, CourseServices cS, UserValidator uV) {
+	public AdminController(UserServices uS, CourseServices cS, UserValidator uV, CourseStudentService cSS) {
 		this.uS = uS;
 		this.cS = cS;
 		this.uV = uV;
+		this.cSS = cSS;
 	}
 	
 	@RequestMapping("")
@@ -161,6 +165,7 @@ public class AdminController {
 		List<Course> allCourses = cS.allCourses();
 		model.addAttribute("allCourses", allCourses);
 		model.addAttribute("studentId",id);
+		model.addAttribute("student", uS.findById(id).getFirstName()+uS.findById(id).getLastName());
 		return "showCourses";
 	}
 	
@@ -169,49 +174,24 @@ public class AdminController {
 									@RequestParam("courseId")Long courseId,
 									RedirectAttributes flash) {
 		User student = uS.findById(studentId);
-		
 		Course course = cS.findById(courseId);
-		List<User> students = course.getStudents();
 		
-		for(User user: students) {
-			if (studentId == user.getId()) {
+		List<Long> students = cSS.findStudentsId(courseId);
+		for(Long user: students) {
+			if (studentId == user) {
 				flash.addFlashAttribute("error", "Already signed to course");
 				return "redirect:/admin/students/"+studentId;
 			}
 		}
 		
-		students.add(student);
-		course.setStudents(students);
-		cS.update(course);
+
+		CourseStudent course_student = new CourseStudent();
+		course_student.setCourse(course);
+		course_student.setUser(student);
+		cSS.save(course_student);
+		
 		return "redirect:/admin/students";
 	}
-	//Logic to join courses and students
-	/* 
 
-	@PostMapping("/courses/{id}")
-	public String addCourse(@PathVariable ("id")Long id, 
-							Principal principal) {
-		String username = principal.getName();
-		User student = uS.findByUsername(username);
-		
-		Course course = cS.findById(id);
-		List<User> students = course.getStudents();
-		
-		//Check if student is already enrolled in course
-		//Not really needed since once a student is enrolled in a class, the add button is disabled
-		for(User s: students) {
-			if (s.getId() == student.getId()) {
-				return "redirect:/student/homepage";
-				//show error in flash
-			}
-		}
-		
-		students.add(student);
-		System.out.println("Size of student's list: "+students.size());
-		course.setStudents(students);
-		cS.update(course);
-		return "redirect:/student/homepage";
-	}
-	*/
 }
 

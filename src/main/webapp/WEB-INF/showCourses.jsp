@@ -12,6 +12,7 @@
 <body>
 	<a href="/admin"> HomePage </a>
 	<h1>Courses available</h1>
+	<h2>Student: ${student }</h2>
 	<strong>${error }</strong>
 	<table>
 		<tr>
@@ -27,7 +28,7 @@
 					<td>${course.prefix }</td>
 					<td>${course.name }</td>
 					<td>${course.description }</td>
-					<td>${fn:length(course.students) }/${course.capacity }</td>
+					<td>${fn:length(course.coursesStudents) }/${course.capacity }</td>
 					<td>${course.teacher.firstName } ${course.teacher.lastName }</td>
 					<td>
 						<form action="/admin/students" method="POST">

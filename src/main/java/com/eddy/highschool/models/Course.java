@@ -9,13 +9,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Course {
@@ -36,8 +37,6 @@ public class Course {
 	@NotNull
 	private Long capacity;
 	
-	private Long grade;
-	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
 	private Date createdAt;
@@ -52,21 +51,17 @@ public class Course {
 	private User teacher;
 	
 	//A course can have many students
-	@ManyToMany(fetch = FetchType.LAZY)
+	/*@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "students_coursesTaken",
 			joinColumns = @JoinColumn(name="course_id"),
 			inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private List<User> students;
-	/*
-	//course and grades
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "courses_grades",
-			joinColumns = @JoinColumn(name="course_id"),
-			inverseJoinColumns = @JoinColumn(name = "grade_id"))
-	private List<Grade> grades;
-	*/
+	private List<User> students;*/
+	
+	@OneToMany(mappedBy="course", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<CourseStudent> coursesStudents;
+	
 	public Course() {
 		this.createdAt = new Date();
 		this.updatedAt = new Date();
@@ -136,20 +131,12 @@ public class Course {
 		this.teacher = teacher;
 	}
 
-	public List<User> getStudents() {
-		return students;
+	public List<CourseStudent> getCoursesStudents() {
+		return coursesStudents;
 	}
 
-	public void setStudents(List<User> students) {
-		this.students = students;
-	}
-
-	public Long getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Long grade) {
-		this.grade = grade;
+	public void setCoursesStudents(List<CourseStudent> coursesStudents) {
+		this.coursesStudents = coursesStudents;
 	}
 	
 }

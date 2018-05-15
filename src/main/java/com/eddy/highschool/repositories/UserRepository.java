@@ -1,6 +1,5 @@
 package com.eddy.highschool.repositories;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;

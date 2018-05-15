@@ -20,6 +20,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class User {
 
@@ -79,12 +81,16 @@ public class User {
 	private List<Course> courses;
 	
 	//A student can take many courses
-	@ManyToMany(fetch = FetchType.LAZY)
+	/*@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name="students_coursesTaken",
 			joinColumns = @JoinColumn(name="user_id"),
 			inverseJoinColumns = @JoinColumn(name = "course_id"))
-	private List<Course> coursesTaken;
+	private List<Course> coursesTaken;*/
+	
+	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<CourseStudent> coursesStudents;
 	
 	public User() {
 		this.createdAt = new Date();
@@ -189,14 +195,6 @@ public class User {
 		this.courses = courses;
 	}
 
-	public List<Course> getCoursesTaken() {
-		return coursesTaken;
-	}
-
-	public void setCoursesTaken(List<Course> coursesTaken) {
-		this.coursesTaken = coursesTaken;
-	}
-
 	public String getStreet() {
 		return street;
 	}
@@ -227,6 +225,14 @@ public class User {
 	
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public List<CourseStudent> getCoursesStudents() {
+		return coursesStudents;
+	}
+
+	public void setCoursesStudents(List<CourseStudent> coursesStudents) {
+		this.coursesStudents = coursesStudents;
 	}
 	
 }

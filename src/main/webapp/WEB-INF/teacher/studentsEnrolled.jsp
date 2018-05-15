@@ -16,7 +16,8 @@
 		<th>Last name</th>
 		<th>Username</th>
 		<th>email</th>
-<!--		<th>Final Grade</th>	-->
+		<th>Assigned Final Grade</th>
+		<th>Final Grade</th>
 	</tr>
 		<c:forEach items="${students }" var="student">
 			<tr>
@@ -24,8 +25,18 @@
 				<td>${student.lastName }</td>
 				<td>${student.username }</td>
 				<td>${student.email }</td>
-<!--  				<td>
-					<form method="post" action="teacher/assignGrade" >
+				<td>
+					<c:choose>
+						<c:when test="${empty student.coursesStudents.get(0).finalGrade }">
+							no grade assigned
+						</c:when>
+						<c:otherwise>
+							${course.coursesStudents.get(0).finalGrade}
+						</c:otherwise>
+					</c:choose>
+				</td>
+  				<td>
+					<form method="post" action="/teacher/assignGrade" >
 						<input type="number" name="finalGrade" />
 						<input type="hidden" name="courseId" value="${course.id }" />
 						<input type="hidden" name="studentId" value="${student.id }" />
@@ -33,7 +44,7 @@
 						<input type="submit" value="assignGrade" />
 					</form>
 				</td>
--->
+
 			</tr>
 		</c:forEach>
 	</table>

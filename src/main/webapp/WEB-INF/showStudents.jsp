@@ -36,8 +36,8 @@
 				<td>${student.zipCode }</td>
 				<td>${student.phoneNumber }</td>
 				<td>
-					<c:forEach items="${student.coursesTaken }" var="course">
-						<span>${course.prefix }-${course.name } || </span>
+					<c:forEach items="${student.coursesStudents }" var="cs">
+						<span>${cs.course.prefix }-${cs.course.name } || </span>
 					</c:forEach>
 				</td>
 				<td><a href="students/${student.id }">See courses available</a></td>
