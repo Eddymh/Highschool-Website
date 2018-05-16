@@ -17,14 +17,14 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	
 	User findByUsername(String username);
 	
-	@Query(value="SELECT User.username "//we could get only the id if we must
+	@Query(value="SELECT User.username "
 			+ "FROM User "
 			+ "INNER JOIN users_roles ON user.id = users_roles.user_id "
 			+ "INNER JOIN role ON users_roles.role_id = role.id "
 			+ "WHERE name =\"ROLE_TEACHER\"", nativeQuery = true)
 	List<String> findAllUsersTeachers();
 	
-	@Query(value="SELECT User.username "//we could get only the id if we must
+	@Query(value="SELECT User.username "
 			+ "FROM User "
 			+ "INNER JOIN users_roles ON user.id = users_roles.user_id "
 			+ "INNER JOIN role ON users_roles.role_id = role.id "
