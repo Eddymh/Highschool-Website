@@ -39,7 +39,7 @@
 				<td>${student.phoneNumber }</td>
 				<td>
 					<c:forEach items="${student.coursesStudents }" var="cs">
-						<span>${cs.course.prefix }-${cs.course.name } || </span>
+						<span>${cs.course.prefix }-${cs.course.name } <br /> </span>
 					</c:forEach>
 				</td>
 				<td><a href="students/${student.id }">See courses available</a></td>

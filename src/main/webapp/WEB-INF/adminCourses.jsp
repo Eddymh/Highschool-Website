@@ -23,6 +23,8 @@
 	
 	<h1>Courses</h1>
 	
+	<strong>${errors }</strong>
+	
 	<table class="table table-hover">
 		<tr>
 			<th>Prefix</th>

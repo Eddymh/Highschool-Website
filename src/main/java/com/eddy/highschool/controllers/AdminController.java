@@ -142,7 +142,17 @@ public class AdminController {
 	}
 	
 	@PostMapping("/courses/delete/{id}")
-	public String deleteCourse(@PathVariable("id")Long id) {
+	public String deleteCourse(@PathVariable("id")Long id,
+								RedirectAttributes flash) {
+		//make sure no student is enlisted in the course to be erased, otherwise show a warning
+		Course course = cS.findById(id);
+		List<CourseStudent> list = course.getCoursesStudents();
+		if(list.size() > 0) {
+			flash.addFlashAttribute("errors", "Make sure noone is enlisted in the course to be deleted");
+			System.out.print("test");
+			return "redirect:/admin/courses";
+		}
+		
 		cS.delete(cS.findById(id));
 		return "redirect:/admin/courses";
 	}

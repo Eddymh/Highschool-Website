@@ -3,6 +3,7 @@ package com.eddy.highschool.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ import com.eddy.highschool.repositories.UserRepository;
 
 @Service
 public class UserServices {
+	
+	@Autowired
 	private UserRepository uR;
 	private RoleRepository rR;
 	private BCryptPasswordEncoder bCrypt;
