@@ -10,6 +10,7 @@ import com.eddy.highschool.models.Role;
 @Repository
 public interface RoleRepository extends CrudRepository<Role,Long>{
 
+	//JPA Query Language(JPA)
 	List<Role> findAll();
 	List<Role> findByName(String name);
 }

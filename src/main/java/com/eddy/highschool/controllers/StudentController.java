@@ -24,16 +24,15 @@ public class StudentController {
 		this.cSS = cSS;
 	}
 	
+	//Student Homepage shows enrolled courses, including final grade assigned
 	@RequestMapping("/homepage")
 	public String studentHomepage(Principal principal,
 									Model model) {
 		String username = principal.getName();
 		User user = uS.findByUsername(username);
 		model.addAttribute("currentUser",user);
-		
 		List<Course> courses = cSS.findCourses(user.getId());
 		model.addAttribute("courses",courses);
 		return "student/studentHomePage";
 	}
-	
 }

@@ -32,6 +32,7 @@ public class TeacherController {
 		this.cSS = cSS;
 	}
 	
+	//Teacher's homepage shows courses assigned to the teacher
 	@RequestMapping("/homepage")
 	public String teacherHomePage(Principal principal, 
 									Model model) {
@@ -43,6 +44,7 @@ public class TeacherController {
 		return "teacher/teacherHomePage";
 	}
 	
+	//shows list of students assigned to a specific course
 	@RequestMapping("/homepage/{id}")
 	public String studentsEnrolled(@PathVariable ("id") Long id, 
 									Model model) {
@@ -53,6 +55,7 @@ public class TeacherController {
 		return "teacher/studentsEnrolled";
 	}
 	
+	//Assigns grade to student
 	@PostMapping("/assignGrade")
 	public String assignGrade(@RequestParam("studentId")Long studentId,
 							@RequestParam("courseId")Long courseId,
@@ -67,5 +70,4 @@ public class TeacherController {
 		}
 		return "redirect:/teacher/homepage/" + courseId;
 	}
-	
 }

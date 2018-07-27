@@ -11,15 +11,14 @@
 	<title>Login Page</title>
 </head>
 <body>
+<!--
 	<c:if test="${logoutMessage != null}" >
 		<c:out value="${logoutMessage}"></c:out>
 	</c:if>
-
+-->
 	<h1>Login</h1>
 	
-	<c:if test="${errorMessage != null}">
-		<c:out value="${errorMessage}"></c:out>
-	</c:if>
+	<strong>${error}</strong>
 	
 	<form method="POST" action="/login">
 		<label for="username">Username</label>

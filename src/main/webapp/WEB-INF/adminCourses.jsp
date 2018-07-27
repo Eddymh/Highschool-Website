@@ -31,7 +31,7 @@
 			<th>Name</th>
 			<th>Description</th>
 			<th>Teacher</th>
-			<th>Student count</th>
+			<th>Students enrolled/capacity</th>
 			<th>update</th>
 			<th>Delete</th>
 		</tr>
@@ -41,7 +41,7 @@
 				<td>${course.name }</td>
 				<td><textarea readonly class="form-control" rows="4" cols="40">${course.description }</textarea></td>
 				<td>${course.teacher.firstName } ${course.teacher.lastName }</td>
-				<td>${fn:length(course.coursesStudents)}/${course.capacity }</td>
+				<td><a href="/admin/courses/enrolled/${course.id}">${fn:length(course.coursesStudents)}/${course.capacity }</a></td>
 				<td><button type="button" class="btn btn-warning" ><a href="/admin/courses/${course.id }">Update</a></button></td>
 				<td>
 					<form action="/admin/courses/delete/${course.id }" method="post">

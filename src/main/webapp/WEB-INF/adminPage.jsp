@@ -18,7 +18,7 @@
 		</div>
 	</form>
 	<h1>ADMIN PANEL</h1>
-	<!-- <h1>Welcome <c:out value="${currentUser.firstName} ${currentUser.lastName}"></c:out></h1> -->
+	<h1>Welcome ${currentUser}</h1>
 	
 	<strong>${success }</strong>
 	

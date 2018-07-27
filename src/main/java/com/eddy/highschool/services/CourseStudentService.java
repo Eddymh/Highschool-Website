@@ -26,6 +26,10 @@ public class CourseStudentService {
 		this.cSR.save(cs);
 	}
 	
+	public void delete(CourseStudent cs) {
+		this.cSR.delete(cs);
+	}
+	
 	public List<User> findStudents(Long course_id) {
 		List<CourseStudent> allStudents =  (List<CourseStudent>) cSR.findAll();
 		List<User> students = new ArrayList<User>();;
@@ -59,4 +63,14 @@ public class CourseStudentService {
 		return courses;
 	}
 	
+	//Finds the CourseService object that holds the relationship between the course and the student and deletes it
+	public void dropStudentFromCourse(Long student_id, Long course_id) {
+		List<CourseStudent> allcourses_students = (List<CourseStudent>) cSR.findAll();
+		for(CourseStudent cs: allcourses_students) {
+			if(cs.getUser().getId() == student_id && cs.getCourse().getId() == course_id) {
+				cSR.delete(cs);
+				break;
+			}
+		}
+	}
 }

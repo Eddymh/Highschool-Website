@@ -17,16 +17,19 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	
 	User findByUsername(String username);
 	
+	/*Returns a list of teachers' usernames*/
 	@Query(value="SELECT User.username "
 			+ "FROM User "
-			+ "INNER JOIN users_roles ON user.id = users_roles.user_id "
+			//user_roles is the table result of the many to many relationship between role and user
+			+ "INNER JOIN users_roles ON User.id = users_roles.user_id "	
 			+ "INNER JOIN role ON users_roles.role_id = role.id "
 			+ "WHERE name =\"ROLE_TEACHER\"", nativeQuery = true)
 	List<String> findAllUsersTeachers();
 	
+	/*Returns a list of students' usernames*/
 	@Query(value="SELECT User.username "
 			+ "FROM User "
-			+ "INNER JOIN users_roles ON user.id = users_roles.user_id "
+			+ "INNER JOIN users_roles ON User.id = users_roles.user_id "
 			+ "INNER JOIN role ON users_roles.role_id = role.id "
 			+ "WHERE name =\"ROLE_STUDENT\"", nativeQuery = true)
 	List<String> findAllUsersStudents();

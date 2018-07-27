@@ -1,6 +1,7 @@
 package com.eddy.highschool.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,9 @@ public class CourseServices {
 		this.cR = cR;
 	}
 	
-	public ArrayList<Course> allCourses(){
-		return (ArrayList<Course>) this.cR.findAll();
+	/*Returns a list with all courses created */
+	public List<Course> allCourses(){
+		return (List<Course>) this.cR.findAll();
 	}
 	
 	public void saveCourse(Course course) {
